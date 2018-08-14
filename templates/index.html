@@ -19,8 +19,8 @@
             <ol>
                 {% for top_player in top_players %}
 {#do refactor#}
-                <li><a href="#">
-                    {{ top_player.user.username }}:{{ top_player.score }}</a></li>
+                <li><label class=".numberlist">
+                    {{ top_player.user.username }}:{{ top_player.score }}</label></li>
 
                 {% endfor %}
 
@@ -28,7 +28,7 @@
 
 
         </div>
-        <button type><a href="/question" style="clear: both">Start Game</a></button>
+        <button type class="start-game-btn"><a href="/question" style="clear: both" class="start-game-link">Start Game</a></button>
 
 
     {% endblock %}

@@ -26,7 +26,7 @@
 
 }
 
-.numberlist a {
+.numberlist label {
 
     position: relative;
 
@@ -52,15 +52,15 @@
 
 }
 
-.numberlist a:hover {
+.numberlist label:hover {
 
     background: #cbe7f8;
 
-    text-decoration: underline;
+    text-decoration: none;
 
 }
 
-.numberlist a:before {
+.numberlist label:before {
 
     content: counter(li);
 

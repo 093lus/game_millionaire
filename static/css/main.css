@@ -13,3 +13,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.start-game-btn{
+
+    background-color: green;
+    border: none;
+    width: 100px;
+    height: 30px;
+    color: white;
+}
+
+.start-game-link{
+  clear: both;
+    color: white;
+    text-decoration: none;
+}
