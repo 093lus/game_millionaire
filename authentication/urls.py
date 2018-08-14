@@ -4,4 +4,5 @@ from authentication import views
 urlpatterns = [
         url(r'^login/$', views.UserLoginView.as_view(), name='login'),
         url(r'^register/$', views.RegisterView.as_view(), name='registration'),
+        url(r'^logout/$', views.LogoutView.as_view(), name='logout')
 ]

@@ -1,9 +1,10 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response, redirect
 from django.template import RequestContext
 from django.views import View
 from authentication.forms import UserForm
+from configs.http_response_settings import DISABLED_ACCOUNTS, INVALID_LOGIN_DETAILS
 
 
 class UserLoginView(View):
@@ -19,10 +20,10 @@ class UserLoginView(View):
                login(request, user)
                return redirect('index')
             else:
-                return HttpResponse("Your account is disabled.")
+                return HttpResponse(DISABLED_ACCOUNTS)
 
         else:
-            return HttpResponse("Invalid login details supplied.")
+            return HttpResponse(INVALID_LOGIN_DETAILS)
 
 
 
@@ -43,4 +44,8 @@ class RegisterView(View):
 
         else:
             return HttpResponse(user_form.errors)
-            return redirect('index')
+            # return redirect('index')
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('login')

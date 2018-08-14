@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body_block %}
+    <a href="../auth/logout" style="margin-left: 100%">Logout</a>
 <div class="list-type3">
     <h1>{{question.question_text}}</h1>
     <form method="post" action="">
@@ -13,7 +14,7 @@
     <ol>
         {% for choice in choices %}
 
-        <li><a><input type="checkbox" value="{{choice.id}}" name ="answer_{{choice.id}}">{{choice.answer_text}}</a></li>
+        <li><label><input type="checkbox" value="{{choice.id}}" name ="answer_{{choice.id}}">{{choice.answer_text}}</label></li>
         {% endfor %}
 
            <input type="submit" class="lp-button" value="State Answer">

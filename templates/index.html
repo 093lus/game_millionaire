@@ -13,13 +13,13 @@
 <body>
 <div class="page">
     {% block body_block %}
-
+ <a href="auth/logout" style="margin-left: 100%">Logout</a>
         <div class="numberlist">
             <h1>TOP PLAYERS</h1>
             <ol>
                 {% for top_player in top_players %}
 {#do refactor#}
-                <li><a href="https://cdn.freshdesignweb.com/best-premium-wordpress-themes-april-2013.html">
+                <li><a href="#">
                     {{ top_player.user.username }}:{{ top_player.score }}</a></li>
 
                 {% endfor %}

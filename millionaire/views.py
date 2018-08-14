@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from millionaire.helper import update_user_score, drop_session_data
 from millionaire.game_settings import *
+from configs.http_response_settings import NOT_ENOUGH_QUESTIONS
 
 
 class Game(LoginRequiredMixin, TemplateView):
@@ -38,13 +39,13 @@ class QuestionView(LoginRequiredMixin, TemplateView):
         game_total_question_count = Question.objects.count()
         print(game_total_question_count)
         if game_total_question_count < QUESTIONS_PER_GAME:
-            return HttpResponse("Sorry we don't have enough questions for one game")
+            return HttpResponse(NOT_ENOUGH_QUESTIONS)
 
 
         question = RandomQuestions.get_random()
 
 
-        if len(request.session['given_questions']) == game_total_question_count:
+        if len(request.session.get('given_questions',[] )) == game_total_question_count:
             request.session['given_questions'] = []
         given_questions = request.session.get('given_questions', [])
         while question.id in given_questions:
@@ -83,12 +84,10 @@ class QuestionView(LoginRequiredMixin, TemplateView):
 
             update_user_score(request.user, user_total_scores)
             drop_session_data(request)
-            # request.session['given_questions'] = []
-            # request.session['user_total_scores'] = 0
-            # request.session['user_question_count'] = 0
 
-
-            return HttpResponse('GAME OVER : YOUR SCORES {}'.format(user_total_scores))
+            request.session['right_answer_ids'] = list(right_answer_ids)
+            return redirect('finish', score=user_total_scores)
+            # return HttpResponse('GAME OVER : YOUR SCORES {}'.format(user_total_scores))
 
         else:
             user_total_scores = request.session.get('user_total_scores', 0) + question_score
@@ -98,10 +97,17 @@ class QuestionView(LoginRequiredMixin, TemplateView):
                 update_user_score(request.user, user_total_scores)
                 drop_session_data(request)
 
-                # request.session['given_questions'] = []
-                # request.session['user_total_scores'] = 0
-                # request.session['user_question_count'] = 0
 
-                return HttpResponse('GAME FINISHED: YOUR SCORES {}'.format(user_total_scores))
+                return redirect('finish', score = user_total_scores)
+                # HttpResponse('GAME FINISHED: YOUR SCORES {}'.format(user_total_scores))
             else:
                 return redirect('question')
+
+class GameFinishView(LoginRequiredMixin, TemplateView):
+    template_name = "game_over.html"
+    def get(self, request, score):
+        true_choice_ids = request.session.get('right_answer_ids', [])
+        if true_choice_ids:
+            del request.session['right_answer_ids']
+        true_choices = Choice.objects.values_list('answer_text',flat = True).filter(id__in = true_choice_ids)
+        return render_to_response(self.template_name, {'score': score,'true_choices': true_choices})
