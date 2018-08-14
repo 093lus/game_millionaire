@@ -38,10 +38,9 @@ class RegisterView(View):
 
             user.set_password(user.password)
             user.save()
-            registered = True
             login(request, user)
             return redirect('index')
-            print('AAAAAAAAAAAAAAAAAAA')
+
         else:
-            print (user_form.errors)
+            return HttpResponse(user_form.errors)
             return redirect('index')

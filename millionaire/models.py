@@ -25,7 +25,7 @@ class RandomQuestions(Question):
     @classmethod
     def get_random(cls):
         count = cls.objects.all().aggregate(max_id=Max("id"))['max_id']
-        random_id = randint(1, count - 1)
+        random_id = randint(1, count)
         x = Question.objects.get(id=random_id)
         return x
 
