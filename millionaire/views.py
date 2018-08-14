@@ -54,14 +54,11 @@ class QuestionView(LoginRequiredMixin, TemplateView):
         request.session['given_questions'] = given_questions
 
 
-        # ##refactor
+        ##refactor
         QuestionChoices = namedtuple("Choices",
                                      ['answer_text', 'is_answer', 'id'])
         question_choices = Choice.objects.values_list('answer_text', 'is_answer', 'id').filter(question=question).all()
         named_choices = [QuestionChoices(*c) for c in question_choices]
-        # question_text = question
-
-        question_choices = Choice.objects.filter(id=1).all()
 
         return render_to_response(self.template_name, {'question': question, 'choices': named_choices})
 
@@ -87,7 +84,6 @@ class QuestionView(LoginRequiredMixin, TemplateView):
 
             request.session['right_answer_ids'] = list(right_answer_ids)
             return redirect('finish', score=user_total_scores)
-            # return HttpResponse('GAME OVER : YOUR SCORES {}'.format(user_total_scores))
 
         else:
             user_total_scores = request.session.get('user_total_scores', 0) + question_score
@@ -99,7 +95,6 @@ class QuestionView(LoginRequiredMixin, TemplateView):
 
 
                 return redirect('finish', score = user_total_scores)
-                # HttpResponse('GAME FINISHED: YOUR SCORES {}'.format(user_total_scores))
             else:
                 return redirect('question')
 

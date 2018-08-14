@@ -44,7 +44,7 @@ class RegisterView(View):
 
         else:
             return HttpResponse(user_form.errors)
-            # return redirect('index')
+
 class LogoutView(View):
     def get(self, request):
         logout(request)
