@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block styles %}
+<link href="{% static 'css/register.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body_block %}
+
+ <form action="" method="post">
+
+        <h1>Sign Up</h1>
+
+        <fieldset>
+          <legend><span class="number">1</span>Your basic info</legend>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="user_name">
+
+          <label for="mail">Email:</label>
+          <input type="email" id="mail" name="user_email">
+
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="user_password">
+
+        </fieldset>
+
+        <button type="submit">Sign Up</button>
+      </form>
+
+{% endblock %}

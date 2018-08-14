@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block styles %}
+<link href="{% static 'css/questions.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body_block %}
+<div class="list-type3">
+    <h1>{{question.question_text}}</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        <input type="text" name="question" style="visibility: hidden" value = "{{question.id}}">
+    <ol>
+        {% for choice in choices %}
+
+        <li><a><input type="checkbox" value="{{choice.id}}" name ="answer_{{choice.id}}">{{choice.answer_text}}</a></li>
+        {% endfor %}
+
+           <input type="submit" class="lp-button" value="State Answer">
+    </ol>
+        <!--<input type="submit" class="lp-button" value="State Answer" >-->
+    </form>
+</div>
+
+{% endblock %}

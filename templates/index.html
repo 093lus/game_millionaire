@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+ {% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet"/>
+
+    {% block styles %}
+        <link href="{% static 'css/top-players.css' %}" rel="stylesheet"/>
+    {% endblock %}
+</head>
+<body>
+<div class="page">
+    {% block body_block %}
+
+        <div class="numberlist">
+            <h1>TOP PLAYERS</h1>
+            <ol>
+                {% for top_player in top_players %}
+{#do refactor#}
+                <li><a href="https://cdn.freshdesignweb.com/best-premium-wordpress-themes-april-2013.html">
+                    {{ top_player.user.username }}:{{ top_player.score }}</a></li>
+
+                {% endfor %}
+
+            </ol>
+
+
+        </div>
+        <button type><a href="/question" style="clear: both">Start Game</a></button>
+
+
+    {% endblock %}
+</div>
+</body>
+</html>
